@@ -21,7 +21,8 @@
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />    
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <queries>
         <intent>
@@ -124,6 +125,39 @@
                 <action android:name="android.content.movie.custom.web.Action" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <!-- 开机广播 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- <category android:name="android.intent.category.DEFAULT" />-->
+            </intent-filter>
+            <intent-filter>
+                <!-- 关机广播 -->
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <!-- <category android:name="android.intent.category.DEFAULT" />-->
+            </intent-filter>
+            <!-- 解锁广播 -->
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- <category android:name="android.intent.category.DEFAULT" />-->
+            </intent-filter>
+            <!--亮屏-->
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SCREEN_ON" />
+                <!-- <category android:name="android.intent.category.DEFAULT" />-->
+            </intent-filter>
+            <!--熄屏-->
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SCREEN_OFF" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            </intent-filter>
+        </receiver>
+
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
